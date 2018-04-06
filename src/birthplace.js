@@ -65,23 +65,8 @@ function numisBetween(num, lower, upper) {
 }
 
 function codeToState(code) {
-  for (var key in stateCodePairs) {
-    if (stateCodePairs[key].includes(code)) {
-      return key;
-    }
-  }
-
-  return null;
-}
-
-function aseanCodeToCountry(code) {
-  for (var key in aseanCountryCodePairs) {
-    if (aseanCountryCodePairs[key] == code) {
-      return key;
-    }
-  }
-
-  return null;
+  return Object.keys(stateCodePairs).find(
+    key => stateCodePairs[key].includes(code));
 }
 
 function isMalaysia(code) {
@@ -125,9 +110,10 @@ function parseMalaysia(code) {
 function parseAsean(code) {
   const data = {
     region: REGION_SOUTHEAST_ASIA,
-    country: aseanCodeToCountry(code),
+    country: aseanCountryCodePairs[code],
     state: null,
   }
+  return data;
 }
 
 function parseForeignKnown(code) {
@@ -180,7 +166,7 @@ function parseStateless(code) {
   return data;
 }
 
-function birthplaceInfo(code) {
+function parse(code) {
   if (isMalaysia(code)) return parseMalaysia(code);
   if (isAsean(code)) return parseAsean(code);
   if (isForeignKnown(code)) return parseForeignKnown(code);
@@ -191,4 +177,18 @@ function birthplaceInfo(code) {
   return null;
 }
 
-console.log(birthplaceInfo('98'));
+function isValid(code) {
+  return (
+    isMalaysia(code) ||
+    isAsean(code) ||
+    isForeignKnown(code) ||
+    isForeignUnknown(code) ||
+    isRegion(code) ||
+    isStateless(code)
+  );
+}
+
+module.exports = {
+  parse,
+  isValid,
+}
