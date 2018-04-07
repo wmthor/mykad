@@ -9,8 +9,9 @@ const REGION_CENTRAL_AMERICA = 'CENTRAL_AMERICA';
 const REGION_NORTH_AMERICA = 'NORTH_AMERICA';
 const REGION_OCEANIA = 'OCEANIA';
 const REGION_MIDDLE_EAST = 'MIDDLE_EAST';
-const REGION_ASIA_PACIFIC = 'ASIA_PACIFIC';
 const REGION_EUROPE = 'EUROPE';
+const REGION_MIDDLE_AMERICA = 'MIDDLE_AMERICA';
+const REGION_MISCELLANEOUS = 'MISCELLANEOUS';
 
 const stateCodePairs = {
   'JHR': ['01', '21', '22', '24'],
@@ -32,33 +33,69 @@ const stateCodePairs = {
   'UNKNOWN_STATE': ['82'],
 }
 
-const aseanCountryCodePairs = {
-  '60': 'BN', '61': 'ID', '62': 'KH',
-  '63': 'LA', '64': 'MM', '65': 'PH',
-  '66': 'SG', '67': 'TH', '68': 'VN',
-};
+const countryCodePairs = {
+  '60': { code: 'BN', region: REGION_SOUTHEAST_ASIA },
+  '61': { code: 'ID', region: REGION_SOUTHEAST_ASIA },
+  '62': { code: 'KH', region: REGION_SOUTHEAST_ASIA },
+  '63': { code: 'LA', region: REGION_SOUTHEAST_ASIA },
+  '64': { code: 'MM', region: REGION_SOUTHEAST_ASIA },
+  '65': { code: 'PH', region: REGION_SOUTHEAST_ASIA },
+  '66': { code: 'SG', region: REGION_SOUTHEAST_ASIA },
+  '67': { code: 'TH', region: REGION_SOUTHEAST_ASIA },
+  '68': { code: 'VN', region: REGION_SOUTHEAST_ASIA },
 
-const otherCountryCodePairs = {
+  '71': { code: 'FOREIGN_UNKNOWN', region: null },
+  '72': { code: 'FOREIGN_UNKNOWN', region: null },
+
   '74': { code: 'CN', region: REGION_EAST_ASIA },
   '75': { code: 'IN', region: REGION_SOUTH_ASIA },
   '76': { code: 'PK', region: REGION_SOUTH_ASIA },
   '77': { code: 'SA', region: REGION_MIDDLE_EAST },
   '78': { code: 'LK', region: REGION_SOUTH_ASIA },
   '79': { code: 'BD', region: REGION_SOUTH_ASIA },
-}
 
-const regionCodePairs = {
-  '83': REGION_ASIA_PACIFIC,
-  '84': REGION_SOUTH_AMERICA,
-  '85': REGION_AFRICA,
-  '86': REGION_EUROPE,
-  '87': REGION_BRITISH_ISLES,
-  '88': REGION_MIDDLE_EAST,
-  '89': REGION_EAST_ASIA,
-  '90': REGION_CENTRAL_AMERICA,
-  '91': REGION_NORTH_AMERICA,
-  '92': REGION_SOVIET_REPUBLIC,
-}
+  '83': {
+    code: 'AS|AU|CX|CC|CK|FJ|PF|GU|HM|MH|FM|NC|NZ|NU|NF|PG|TL|TK|UM|WF',
+    region: REGION_OCEANIA },
+  '84': {
+    code: 'AI|AR|AW|BO|BR|CL|CO|EC|GF|GP|GY|PY|PE|GS|ST|UY|VE',
+    region: REGION_SOUTH_AMERICA },
+  '85': {
+    code: 'DZ|AO|BW|BI|CM|CF|CG|CD|DG|EG|ER|ET|GA|GM|GN|KE|LR|MW|ML|MR|YT|' +
+          'MA|MZ|NA|NE|NG|RW|RE|SN|SL|SO|SD|SZ|TZ|TG|TO|TN|UG|ME|ZR|ZM|ZW',
+    region: REGION_AFRICA },
+  '86': {
+    code: 'AM|AT|BE|CY|DK|FO|FR|FI|DE|DD|GR|VA|IT|LU|' + 
+          'MK|MT|MC|NL|NO|PT|MD|SK|SI|ES|SE|CH|GG|JE|IM',
+    region: REGION_EUROPE },
+  '87': {
+    code: 'GB|IE',
+    region: REGION_BRITISH_ISLES },
+  '88': {
+    code: 'BH|IR|IQ|PS|JO|KW|OM|QA|YE|SY|TR|YE|YD|',
+    region: REGION_MIDDLE_EAST },
+  '89': {
+    code: 'JP|KP|KR|TW',
+    region: REGION_EAST_ASIA },
+  '90': {
+    code: 'BS|BB|BZ|CR|CU|DM|DO|SV|GD|GT|HT|HN|' +
+          'JM|MQ|MX|NI|PA|PR|KN|LC|VC|TT|TC|VI',
+    region: REGION_MIDDLE_AMERICA },
+  '91': {
+    code: 'CA|GL|AN|PM|US',
+    region: REGION_NORTH_AMERICA },
+  '92': {
+    code: 'AL|BY|BA|BG|HR|CZ|CS|EE|GE|HU|LV|LT|ME|PL|XK|RO|RU|RS|UA',
+    region: REGION_SOVIET_REPUBLIC },
+  '93': {
+    code: 'AF|AD|AQ|AG|AZ|BJ|BM|BT|IO|BF|CV|KY|KM|DY|GQ|TF|GI|GW|HK|' + 
+          'IS|CI|KZ|KI|KG|LS|LY|LI|MO|MG|MV|MU|MN|MS|NR|NP|MP|PW|PS|' +
+          'PN|SH|LC|VC|WS|SM|ST|SC|SB|SJ|TJ|TM|TV|HV|UZ|VU|VA|VG|YU',
+    region: REGION_MISCELLANEOUS },
+  
+  '98': { code: 'STATELESS', region: null },
+  '99': { code: 'UNSPECIFIED', region: null },
+};
 
 function numisBetween(num, lower, upper) {
   return (num - lower) * (num - upper) <= 0
@@ -77,24 +114,8 @@ function isMalaysia(code) {
   );
 }
 
-function isAsean(code) {
-  return numisBetween(code, 60, 68);
-}
-
-function isForeignKnown(code) {
-  return numisBetween(code, 74, 79);
-}
-
-function isForeignUnknown(code) {
-  return [71, 72, 93].includes(code);
-}
-
-function isRegion(code) {
-  return numisBetween(code, 83, 93);
-}
-
-function isStateless(code) {
-  return code == 98 || code == 99;
+function isForeign(code) {
+  return countryCodePairs[code] != undefined;
 }
 
 function parseMalaysia(code) {  
@@ -107,85 +128,33 @@ function parseMalaysia(code) {
   return data;
 }
 
-function parseAsean(code) {
-  const data = {
-    region: REGION_SOUTHEAST_ASIA,
-    country: aseanCountryCodePairs[code],
-    state: null,
-  }
-  return data;
-}
-
-function parseForeignKnown(code) {
-  const countryData = otherCountryCodePairs[code];
-
-  const data = {
-    region: countryData.region,
-    country: countryData.code,
-    state: null,
-  };
-
-  return data;
-}
-
-function parseForeignUnknown(code) {
+function parseForeign(code) {
   const data = {
     region: null,
     country: 'FOREIGN',
     state: null,
   };
-  
-  if (code == 93) {
-    data.country = 'OTHERS';
+
+  if (numisBetween(code, 71, 72)) {
+    return data;
   }
 
-  return data;
-}
-
-function parseRegion(code) {
-  const data = {
-    region: regionCodePairs[code],
-    country: null,
-    state: null,
-  }
-
-  return data;
-}
-
-function parseStateless(code) {
-  const country = (code == 98)
-    ? 'STATELESS'
-    : 'NEUTRAL_ZONE';
-
-  const data = {
-    region: null,
-    country,
-    state: null,
-  }
+  const countryData = countryCodePairs[code];
+  data.region = countryData.region;
+  data.country = countryData.code;
 
   return data;
 }
 
 function parse(code) {
   if (isMalaysia(code)) return parseMalaysia(code);
-  if (isAsean(code)) return parseAsean(code);
-  if (isForeignKnown(code)) return parseForeignKnown(code);
-  if (isForeignUnknown(code)) return parseForeignUnknown(code);
-  if (isRegion(code)) return parseRegion(code);
-  if (isStateless(code)) return parseStateless(code);
+  if (isForeign(code)) return parseForeign(code);
 
   return null;
 }
 
 function isValid(code) {
-  return (
-    isMalaysia(code) ||
-    isAsean(code) ||
-    isForeignKnown(code) ||
-    isForeignUnknown(code) ||
-    isRegion(code) ||
-    isStateless(code)
-  );
+  return isMalaysia(code) || isForeign(code);
 }
 
 module.exports = {

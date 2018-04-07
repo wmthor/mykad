@@ -1,6 +1,6 @@
 const birthplace = require('./birthplace');
 
-icNum = '180501-03-6147';
+const icNum = '180501-03-6147';
 
 function numisBetween(num, lower, upper) {
   return (num - lower) * (num - upper) <= 0
@@ -16,8 +16,10 @@ function dateIsBefore(before, max) {
 }
 
 function codeToDate(year, month, day) {
+  const monthIndex = month - 1;
+
   const today = new Date();
-  const birthDate = new Date(year, month - 1, day)
+  const birthDate = new Date(year, monthIndex, day);
 
   const currentYearCode = today.getFullYear().toString().substr(-2);
 
@@ -28,8 +30,13 @@ function codeToDate(year, month, day) {
     (year == currentYearCode && dateIsBefore(birthDate, today))) {
       birthDate.setFullYear(birthDate.getFullYear() + 100);
   }
-  
-  return birthDate;
+
+  // Simple date validation
+  if (birthDate.getMonth() == monthIndex && birthDate.getDate() == day) {
+    return birthDate;
+  }
+    
+  return NaN;
 }
 
 function codeToGender(code) {
@@ -38,11 +45,11 @@ function codeToGender(code) {
     : 'male';
 }
 
-function extractParts(icNum) {
+function extractParts(icNum, err=true) {
   const regex = /^(\d{2})(\d{2})(\d{2})-?(\d{2})-?(\d{3})(\d{1})$/;
   const parts = icNum.match(regex);
 
-  if (!parts) {
+  if (!parts && err) {
     throw new Error('Parsing error: Invalid IC number');
   }
 
@@ -50,13 +57,24 @@ function extractParts(icNum) {
 }
 
 function isValid(icNum) {
-  const parts = extractParts(icNum);
-  const birthDate = codeToDate(parts[1], parts[2], parts[3]);
-  return !isNaN(birthDate) && birthplace.isValid(parts[4]);
+  const parts = extractParts(icNum, false);
+
+  if (parts) {
+    const birthDate = codeToDate(parts[1], parts[2], parts[3]);
+    return !isNaN(birthDate) && birthplace.isValid(parts[4]);
+  }
+  
+  return false;
 }
 
 function parse(icNum) {
-  const parts = extractParts(icNum);
+  let parts;
+
+  try {
+    parts = extractParts(icNum);
+  } catch(error) {
+    throw error;
+  }
 
   const data = {
     birthDate: codeToDate(parts[1], parts[2], parts[3]),
@@ -76,8 +94,6 @@ function unformat(icNum) {
   const check = format(icNum);
   return check.replace(/-/g, '');
 }
-
-console.log(parse(icNum))
 
 module.exports = {
   isValid,
