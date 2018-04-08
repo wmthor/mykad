@@ -48,26 +48,16 @@ MyKad numbers contain information about the holders date of birth, place of birt
 mykad.parse('890724-01-2498', (err, data) => {
     if (err) throw err;
     console.log(data);
-    /*
-    {
-        birthDate: 1989-07-23T16:00:00.000Z,
-        birthPlace: { region: 'SOUTHEAST_ASIA', country: 'MY', state: 'JHR' },
-        gender: 'female'
-    }
-    */
 });
+```
 
-mykad.parse('921005-91-1487', (err, data) => {
-    if (err) throw err;
-    console.log(data);
-    /*
-    {
-        birthDate: 1992-10-04T16:00:00.000Z,
-        birthPlace:{ region: 'NORTH_AMERICA', country: 'CA|GL|AN|PM|US', state: null },
-        gender: 'male'
-    }
-    */
-});
+Parsed data is as the following:
+```
+{
+    birthDate: 1989-07-23T16:00:00.000Z,
+    birthPlace: { region: 'SOUTHEAST_ASIA', country: 'MY', state: 'JHR' },
+    gender: 'female'
+}
 ```
 
 ### Birthplace
@@ -89,11 +79,17 @@ Some codes for place of birth only contain information of the approximate region
 ```
 ['SOUTHEAST_ASIA', 'BRITISH_ISLES', 'SOVIET_REPUBLIC', 'EAST_ASIA', 'SOUTH_ASIA', 'AFRICA', 'SOUTH_AMERICA', 'CENTRAL_AMERICA', 'OCEANIA', 'MIDDLE_EAST', 'EUROPE', 'MIDDLE_AMERICA', 'MISCELLANEOUS']
 ```
-Known regions data contains the list of countries. For example:
+Known regions data contains the list of the countries as documented in the official registry. For example:
 ```
 {
     region: 'NORTH_AMERICA',
     country: 'CA|GL|AN|PM|US',
     state: null
 }
+```
+
+### Gender
+Gender information is provided in the form of the following values:
+```
+['male', 'female']
 ```
