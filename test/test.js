@@ -1,7 +1,7 @@
 var chai = require('chai');  
 var expect = chai.expect;
 
-const mykad = require('../src/')
+const mykad = require('../dist/');
 
 describe('MyKad', () => {
   describe('#isValid()', () => {

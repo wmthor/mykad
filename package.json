@@ -1,8 +1,8 @@
 {
   "name": "mykad",
   "version": "1.0.0",
-  "description": "Tools for Malaysian identity card (MyKad)",
-  "main": "./distribution/index.js",
+  "description": "Tools to validate, parse, and format Malaysian identity card (MyKad) number",
+  "main": "./dist/index.js",
   "scripts": {
     "test": "npm run build && mocha",
     "build": "babel src --presets babel-preset-es2015 --out-dir dist",
