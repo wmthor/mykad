@@ -52,7 +52,7 @@ mykad.parse('890724-01-2498', (err, data) => {
     {
         birthDate: 1989-07-23T16:00:00.000Z,
         birthPlace: { region: 'SOUTHEAST_ASIA', country: 'MY', state: 'JHR' },
-        gender: 'female' }
+        gender: 'female'
     }
     */
 });
@@ -64,7 +64,7 @@ parse('921005-91-1487', (err, data) => {
     {
         birthDate: 1992-10-04T16:00:00.000Z,
         birthPlace:{ region: 'NORTH_AMERICA', country: 'CA|GL|AN|PM|US', state: null },
-        gender: 'male',
+        gender: 'male'
     }
     */
 });
