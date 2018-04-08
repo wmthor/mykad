@@ -36,26 +36,28 @@ function codeToGender(code) {
     : 'male';
 }
 
-function extractParts(icNum, err=true) {
+function extractParts(icNum) {
   const regex = /^(\d{2})(\d{2})(\d{2})-?(\d{2})-?(\d{3})(\d{1})$/;
   const parts = icNum.match(regex);
 
-  if (!parts && err) {
-    throw new Error('Parsing error: Invalid IC number');
+  if (!parts) {
+    throw new Error('Invalid MyKad number format');
   }
 
   return parts;
 }
 
 function isValid(icNum) {
-  const parts = extractParts(icNum, false);
+  let parts;
 
-  if (parts) {
-    const birthDate = codeToDate(parts[1], parts[2], parts[3]);
-    return !isNaN(birthDate) && birthplace.isValid(parts[4]);
+  try {
+    parts =  extractParts(icNum);
+  } catch(error) {
+    return false;
   }
-  
-  return false;
+
+  const birthDate = codeToDate(parts[1], parts[2], parts[3]);
+  return !isNaN(birthDate) && birthplace.isValid(parts[4]);
 }
 
 function parse(icNum, cb) {
@@ -74,14 +76,27 @@ function parse(icNum, cb) {
   })
 }
 
-function format(icNum) {
-  const parts = extractParts(icNum);
-  return `${parts[1]}${parts[2]}${parts[3]}-${parts[4]}-${parts[5]}${parts[6]}`;
+function format(icNum, cb) {
+  let parts;
+  
+  try {
+    parts = extractParts(icNum);
+  } catch(error) {
+    return cb(error, null);
+  }
+
+  const formatted = `${parts[1]}${parts[2]}${parts[3]}-${parts[4]}-${parts[5]}${parts[6]}`;
+  return cb(null, formatted);
 }
 
-function unformat(icNum) {
-  const check = format(icNum);
-  return check.replace(/-/g, '');
+function unformat(icNum, cb) {
+  format(icNum, (err, formatted) => {
+    if (err) {
+      return cb(err, null);
+    }
+
+    return cb(null, formatted.replace(/-/g, ''));
+  });
 }
 
 module.exports = {
