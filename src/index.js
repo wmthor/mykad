@@ -58,7 +58,7 @@ function isValid(icNum) {
   return false;
 }
 
-const parse = (icNum, cb) => {
+function parse(icNum, cb) {
   let parts;
 
   try {
