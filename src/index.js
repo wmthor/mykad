@@ -1,42 +1,33 @@
 const birthplace = require('./birthplace');
 
-const icNum = '180501-03-6147';
-
 function numisBetween(num, lower, upper) {
   return (num - lower) * (num - upper) <= 0
 }
 
-// Check if date is before for same years.
+// Check if date is before disregarding year.
 function dateIsBefore(before, max) {
-  if (before.getMonth() == max.getMonth()) {
-    return before.getDate() <= max.getDate()
-  }
+  const bNorm = new Date(0, before.getMonth(), before.getDate());
+  const mNorm = new Date(0, max.getMonth(), max.getDate());
 
-  return before.getMonth() < max.getMonth();
+  return bNorm < mNorm;
 }
 
 function codeToDate(year, month, day) {
-  const monthIndex = month - 1;
-
   const today = new Date();
-  const birthDate = new Date(year, monthIndex, day);
+  const birthDate = new Date(year, month - 1, day);
 
-  const currentYearCode = today.getFullYear().toString().substr(-2);
+  const age = today.getYear() - birthDate.getYear();
 
   // Works for now. Update this in year 2099.
-  // Add 100 years if the 2 digit year code is smaller than this years code.
   // For same year, checks if date has passed.
-  if (year < currentYearCode ||
-    (year == currentYearCode && dateIsBefore(birthDate, today))) {
-      birthDate.setFullYear(birthDate.getFullYear() + 100);
+  if (age > 100 || (age == 100 && dateIsBefore(birthDate, today))) {
+    birthDate.setFullYear(birthDate.getFullYear() + 100);
   }
 
-  // Simple date validation
-  if (birthDate.getMonth() == monthIndex && birthDate.getDate() == day) {
-    return birthDate;
-  }
-    
-  return NaN;
+  // Check valid date.
+  return (birthDate.getDate() == day)
+    ? birthDate
+    : NaN;
 }
 
 function codeToGender(code) {
@@ -67,22 +58,20 @@ function isValid(icNum) {
   return false;
 }
 
-function parse(icNum) {
+const parse = (icNum, cb) => {
   let parts;
 
   try {
     parts = extractParts(icNum);
   } catch(error) {
-    throw error;
+    return cb(error, null);
   }
 
-  const data = {
+  return cb(null, {
     birthDate: codeToDate(parts[1], parts[2], parts[3]),
     birthPlace: birthplace.parse(parts[4]),
     gender: codeToGender(parts[6])
-  }
-
-  return data;
+  })
 }
 
 function format(icNum) {
