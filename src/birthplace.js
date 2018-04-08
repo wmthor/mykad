@@ -62,11 +62,11 @@ const countryCodePairs = {
     region: REGION_SOUTH_AMERICA },
   '85': {
     country: 'DZ|AO|BW|BI|CM|CF|CG|CD|DG|EG|ER|ET|GA|GM|GN|KE|LR|MW|ML|MR|YT|' +
-          'MA|MZ|NA|NE|NG|RW|RE|SN|SL|SO|SD|SZ|TZ|TG|TO|TN|UG|ME|ZR|ZM|ZW',
+             'MA|MZ|NA|NE|NG|RW|RE|SN|SL|SO|SD|SZ|TZ|TG|TO|TN|UG|ME|ZR|ZM|ZW',
     region: REGION_AFRICA },
   '86': {
     country: 'AM|AT|BE|CY|DK|FO|FR|FI|DE|DD|GR|VA|IT|LU|' + 
-          'MK|MT|MC|NL|NO|PT|MD|SK|SI|ES|SE|CH|GG|JE|IM',
+             'MK|MT|MC|NL|NO|PT|MD|SK|SI|ES|SE|CH|GG|JE|IM',
     region: REGION_EUROPE },
   '87': {
     country: 'GB|IE',
@@ -79,7 +79,7 @@ const countryCodePairs = {
     region: REGION_EAST_ASIA },
   '90': {
     country: 'BS|BB|BZ|CR|CU|DM|DO|SV|GD|GT|HT|HN|' +
-          'JM|MQ|MX|NI|PA|PR|KN|LC|VC|TT|TC|VI',
+             'JM|MQ|MX|NI|PA|PR|KN|LC|VC|TT|TC|VI',
     region: REGION_MIDDLE_AMERICA },
   '91': {
     country: 'CA|GL|AN|PM|US',
@@ -89,8 +89,8 @@ const countryCodePairs = {
     region: REGION_SOVIET_REPUBLIC },
   '93': {
     country: 'AF|AD|AQ|AG|AZ|BJ|BM|BT|IO|BF|CV|KY|KM|DY|GQ|TF|GI|GW|HK|' + 
-          'IS|CI|KZ|KI|KG|LS|LY|LI|MO|MG|MV|MU|MN|MS|NR|NP|MP|PW|PS|' +
-          'PN|SH|LC|VC|WS|SM|ST|SC|SB|SJ|TJ|TM|TV|HV|UZ|VU|VA|VG|YU',
+             'IS|CI|KZ|KI|KG|LS|LY|LI|MO|MG|MV|MU|MN|MS|NR|NP|MP|PW|PS|' +
+             'PN|SH|LC|VC|WS|SM|ST|SC|SB|SJ|TJ|TM|TV|HV|UZ|VU|VA|VG|YU',
     region: REGION_MISCELLANEOUS },
   
   '98': { country: 'STATELESS', region: null },
