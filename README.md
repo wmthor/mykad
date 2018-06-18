@@ -1,5 +1,5 @@
 # MyKad
-The MyKad library provides tools to validate, parse, and format Malaysian Identity Card (MyKad) numbers.
+The MyKad library provides tools to validate, parse, generate, and format Malaysian Identity Card (MyKad) numbers.
 
 ## Installation
 Using npm:
@@ -40,6 +40,13 @@ mykad.unformat('111013-01-8934', (err, unformatted) => {
     if (err) throw error;
     console.log(unformatted); // 111013018934
 });
+```
+
+### Generate
+You can generate random MyKad numbers. All generate numbers are valid MyKad numbers.
+```
+const randomIcNum = mykad.generateRandom();
+console.log(randomIcNum);
 ```
 
 ## Parsing
