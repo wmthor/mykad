@@ -165,4 +165,13 @@ describe('MyKad', () => {
       });
     });
   });
+
+  describe('#generateRandom()', () => {
+    it('should return valid randomized MyKad number', () => {
+      const randomNo = mykad.generateRandom();
+
+      expect(randomNo).to.have.lengthOf(12);
+      expect(mykad.isValid(randomNo)).to.be.true;
+    });
+  });
 });

@@ -1,4 +1,5 @@
 const birthplace = require('./birthplace');
+const random = require('./random');
 
 // Check if date is before disregarding year.
 function dateIsBefore(before, max) {
@@ -27,7 +28,7 @@ function codeToDate(year, month, day) {
 }
 
 function codeToGender(code) {
-	return (code % 2 == 0)
+	return (code % 2 === 0)
 		? 'female'
 		: 'male';
 }
@@ -46,8 +47,8 @@ function extractParts(icNum) {
 function isValid(icNum) {
 	let parts;
 
-	try {
-		parts =  extractParts(icNum);
+	try { 
+		parts = extractParts(icNum);
 	} catch(error) {
 		return false;
 	}
@@ -100,4 +101,5 @@ module.exports = {
 	parse,
 	format,
 	unformat,
+	generateRandom: random.generateRandom,
 }
