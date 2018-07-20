@@ -50,7 +50,7 @@ console.log(randomIcNum);
 ```
 
 ## Parsing
-MyKad numbers contain information about the holders date of birth, place of birth, and gender.
+MyKad numbers contain information about the holder's date of birth, place of birth, and gender. Date of birth assumes the age is under 100 years old. For example, the birth year '12' is 2012 instead of 1912.
 ```
 mykad.parse('890724-01-2498', (err, data) => {
     if (err) throw err;
@@ -67,8 +67,9 @@ Parsed data is as the following:
 }
 ```
 
+
 ### Birthplace
-State information is available for those born in Malaysia. For others, it either contains the specific country information, or only an approximation of the region. However, some countries are uncategorized.
+State information is available for those born in Malaysia. For others, it either contains the specific country information or only an approximation of the region. However, some countries are uncategorized.
 
 #### States 
 ```
@@ -100,3 +101,5 @@ Gender information is provided in the form of the following values:
 ```
 ['male', 'female']
 ```
+
+More info: [twm](https://twm.me)
