@@ -1,12 +1,18 @@
 # MyKad
+
+[![NPM](https://nodei.co/npm/mykad.png)](https://nodei.co/npm/mykad/)
 The MyKad library provides tools to validate, parse, generate, and format Malaysian Identity Card (MyKad) numbers.
 
 ## Installation
+
 Using npm:
+
 ```
 npm install mykad
 ```
+
 ## Importing
+
 ```
 const mykad = require('mykad');
 ```
