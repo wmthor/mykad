@@ -78,12 +78,11 @@ Parsed data is as the following:
 
 ```javascript
 {
-    birthDate: 1989-07-23T16:00:00.000Z,
+    birthDate: new Date(1989, 6, 24),
     birthPlace: { region: 'SOUTHEAST_ASIA', country: 'MY', state: 'JHR' },
     gender: 'female'
 }
 ```
-
 
 ### Birthplace
 
