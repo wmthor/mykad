@@ -167,7 +167,7 @@ function codeToDate(year, month, day) {
     }
 
     // Check valid date.
-    return birthDate.getDate() == day ? birthDate : NaN;
+    return birthDate.getDate() == day && birthDate.getMonth() == month - 1 ? birthDate : NaN;
 }
 
 function codeToGender(code) {
@@ -195,6 +195,7 @@ function isValid(icNum) {
     }
 
     var birthDate = codeToDate(parts[1], parts[2], parts[3]);
+    console.log(birthDate);
     return !isNaN(birthDate) && birthplace.isValid(parts[4]);
 }
 
