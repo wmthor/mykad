@@ -31,7 +31,17 @@ describe('MyKad', () => {
     });
 
     it('should return false for MyKad with invalid date of birth', () => {
-      const icNum = '111334013324';
+      const icNum = '110234013324';
+      expect(mykad.isValid(icNum)).to.be.false;
+    });
+
+    it('should return false for MyKad with invalid month of birth', () => {
+      const icNum = '541324013324';
+      expect(mykad.isValid(icNum)).to.be.false;
+    });
+
+    it('should return false for MyKad with invalid month and date of birth', () => {
+      const icNum = '541352013324';
       expect(mykad.isValid(icNum)).to.be.false;
     });
 

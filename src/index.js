@@ -22,7 +22,7 @@ function codeToDate(year, month, day) {
     }
 
     // Check valid date.
-    return (birthDate.getDate() == day)
+    return (birthDate.getDate() == day && birthDate.getMonth() == month - 1)
         ? birthDate
         : NaN;
 }
@@ -54,6 +54,7 @@ function isValid(icNum) {
     }
 
     const birthDate = codeToDate(parts[1], parts[2], parts[3]);
+    console.log(birthDate);
     return !isNaN(birthDate) && birthplace.isValid(parts[4]);
 }
 
