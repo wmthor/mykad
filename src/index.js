@@ -54,7 +54,6 @@ function isValid(icNum) {
     }
 
     const birthDate = codeToDate(parts[1], parts[2], parts[3]);
-    console.log(birthDate);
     return !isNaN(birthDate) && birthplace.isValid(parts[4]);
 }
 
