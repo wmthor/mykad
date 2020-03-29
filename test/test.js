@@ -6,43 +6,40 @@ const mykad = require('../dist/');
 describe('MyKad', () => {
   describe('#isValid()', () => {
     it('should return true for valid unformatted MyKad number', () => {
-      const icNum = '910401052331';
-      expect(mykad.isValid(icNum)).to.be.true;
+      expect(mykad.isValid('910401052331')).to.be.true;
+      expect(mykad.isValid('000401052331')).to.be.true;
     });
 
     it('should return true for valid formatted MyKad number', () => {
-      const icNum = '910223-08-1274';
-      expect(mykad.isValid(icNum)).to.be.true;
+      expect(mykad.isValid('910223-08-1274')).to.be.true;
+      expect(mykad.isValid('000223-08-1274')).to.be.true;
     });
 
     it('should return false for invalid input', () => {
-      const icNum = 'loooool';
-      expect(mykad.isValid(icNum)).to.be.false;  
+      expect(mykad.isValid('loooool')).to.be.false;  
     });
 
     it('should return false for MyKad with too many numbers', () => {
-      const icNum = '27812121293451';
-      expect(mykad.isValid(icNum)).to.be.false;
+      expect(mykad.isValid('27812121293451')).to.be.false;
     });
 
     it('should return false for MyKad with too little numbers', () => {
-      const icNum = '8705';
-      expect(mykad.isValid(icNum)).to.be.false;
+      expect(mykad.isValid('8705')).to.be.false;
     });
 
     it('should return false for MyKad with invalid date of birth', () => {
-      const icNum = '110234013324';
-      expect(mykad.isValid(icNum)).to.be.false;
+      expect(mykad.isValid('110234013324')).to.be.false;
+      expect(mykad.isValid('110200013324')).to.be.false;
     });
 
     it('should return false for MyKad with invalid month of birth', () => {
-      const icNum = '541324013324';
-      expect(mykad.isValid(icNum)).to.be.false;
+      expect(mykad.isValid('541324013324')).to.be.false;
+      expect(mykad.isValid('540024013324')).to.be.false;
     });
 
     it('should return false for MyKad with invalid month and date of birth', () => {
-      const icNum = '541352013324';
-      expect(mykad.isValid(icNum)).to.be.false;
+      expect(mykad.isValid('541352013324')).to.be.false;
+      expect(mykad.isValid('540000013324')).to.be.false;
     });
 
     it('should return false for MyKad with invalid place of births', () => {
@@ -63,6 +60,11 @@ describe('MyKad', () => {
         '460911021389': {
           birthDate: new Date(1946, 8, 11),
           birthPlace: { region: 'SOUTHEAST_ASIA', country: 'MY', state: 'KDH' },
+          gender: 'male',
+        },
+        '001103049627': {
+          birthDate: new Date(2000, 10, 3),
+          birthPlace: { region: 'SOUTHEAST_ASIA', country: 'MY', state: 'MLK' },
           gender: 'male',
         },
         '880527637345': {
