@@ -12,10 +12,17 @@ Using npm:
 npm install mykad
 ```
 
+
 ## Importing
 
 ```javascript
 const mykad = require('mykad');
+```
+
+## Browser
+
+```html
+<script src="browser/mykad.min.js"></script>
 ```
 
 ## Features
