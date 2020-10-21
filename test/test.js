@@ -112,7 +112,7 @@ describe('MyKad', () => {
           gender: 'male',
         },
       }
-
+  
       Object.keys(numDataPairs).find(key => {
         mykad.parse(key, (err, data) => {
           expect(data).to.deep.equal(numDataPairs[key]);
@@ -120,7 +120,7 @@ describe('MyKad', () => {
       });
     });
 
-    it('should return correct data object for valid formatted MyKad number', () => {
+    it('should return correct data object for valid formatted MyKad number', done => {
       const icNum = '460911-02-1389';
       mykad.parse(icNum, (err, data) => {
         expect(data).to.deep.equal({
@@ -128,52 +128,59 @@ describe('MyKad', () => {
           birthPlace: { region: 'SOUTHEAST_ASIA', country: 'MY', state: 'KDH' },
           gender: 'male',
         });
+        done();
       });
     });
 
-    it('should throw error for MyKad number with wrong format', () => {
+    it('should throw error for MyKad number with wrong format', done => {
       const icNum = '1910401052331';
       mykad.parse(icNum, (err, data) => {
         expect(err).to.be.an('error');
         expect(data).to.be.null;
+        done();
       });
     });
 
-    it('should throw error for invalid input', () => {
+    it('should throw error for invalid input', done => {
       const icNum = 'lololz';
       mykad.parse(icNum, (err, data) => {
         expect(err).to.be.an('error');
         expect(data).to.be.null;
+        done();
       })
     });
   });
 
   describe('#format()', () => {
-    it('should return formatted MyKad number', () => {
+    it('should return formatted MyKad number', done => {
       mykad.format('670822073459', (err, formatted) => {
         expect(formatted).to.be.equal('670822-07-3459');
+        done();
       });
     });
 
-    it('should throw error for invalid MyKad number', () => {
+    it('should throw error for invalid MyKad number', done => {
       mykad.format('67a642019435', (err, formatted) => {
         expect(err).to.be.an('error');
         expect(formatted).to.be.null;
+        done();
       });
     });
   });
 
   describe('#unformat()', () => {
-    it('should return unformatted MyKad number', () => {
+    it('should return unformatted MyKad number', done => {
       mykad.unformat('450312-09-4387', (err, unformatted) => {
         expect(unformatted).to.be.equal('450312094387');
+        done();
       });
     });
 
-    it('should throw error for invalid MyKad number', () => {
+    it('should throw error for invalid MyKad number', done => {
       mykad.unformat('95303132094287', (err, formatted) => {
         expect(err).to.be.an('error');
         expect(formatted).to.be.null;
+        done();
       });
     });
   });
