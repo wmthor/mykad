@@ -49,16 +49,37 @@ mykad.isValid('561372-70-7953')
 
 MyKad numbers can be formatted to either have dash or without. Note that this simply formats without validation (date/place of birth code). You can use isValid() if you need to check for validity.
 
+#### Format
 ```javascript
+// Asynchronous
 mykad.format('111013018934', (err, formatted) => {
     if (err) throw error;
     console.log(formatted); // 111013-01-8934
 });
 
+// Synchronous
+try {
+    const formatted = mykad.format('111013018934');
+    console.log(formatted); // 111013-01-8934
+} catch (error) {
+    throw error;
+}
+```
+#### Unformat
+```javascript
+// Asynchronous
 mykad.unformat('111013-01-8934', (err, unformatted) => {
     if (err) throw error;
     console.log(unformatted); // 111013018934
 });
+
+// Synchronous
+try {
+    const unformatted = mykad.unformat('111013-01-8934');
+    console.log(unformatted); // 111013018934
+} catch (error) {
+    throw error;
+}
 ```
 
 ### Generate
@@ -75,10 +96,19 @@ console.log(randomIcNum);
 MyKad numbers contain information about the holder's date of birth, place of birth, and gender. Date of birth assumes the age is under 100 years old. For example, the birth year '12' is 2012 instead of 1912.
 
 ```javascript
+// Asynchronous
 mykad.parse('890724-01-2498', (err, data) => {
     if (err) throw err;
     console.log(data);
 });
+
+// Synchronous
+try {
+    const data = mykad.parse('890724-01-2498');
+    console.log(data); // 111013018934
+} catch (error) {
+    throw error;
+}
 ```
 
 Parsed data is as the following:
@@ -134,5 +164,20 @@ Gender information is provided in the form of the following values:
 ```javascript
 ['male', 'female']
 ```
+
+## Error handling
+You can omit try/catch error handling for synchronous functions when the inputted IC numbers are certain to be valid, such as after calling `mykad.isValid(icNum)` to verify the input.
+
+```javascript
+if (mykad.isValid(icNum)) {
+    // e.g.
+    // mykad.format(icNum);
+    // mykad.unformat(icNum);
+    // mykad.parse(icNum);
+}
+```
+
+## Issues
+For any issues or suggestions for the library, you can make them on the GitHub repository.
 
 More info: [twm](https://twm.me)
