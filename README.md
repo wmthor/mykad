@@ -105,7 +105,7 @@ mykad.parse('890724-01-2498', (err, data) => {
 // Synchronous
 try {
     const data = mykad.parse('890724-01-2498');
-    console.log(data); // 111013018934
+    console.log(data);
 } catch (error) {
     throw error;
 }
