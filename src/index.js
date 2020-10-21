@@ -63,14 +63,21 @@ function parse(icNum, cb) {
     try {
         parts = extractParts(icNum);
     } catch(error) {
+        if (!cb) throw error;
         return cb(error, null);
     }
 
-    return cb(null, {
+    const parsedData = {
         birthDate: codeToDate(parts[1], parts[2], parts[3]),
         birthPlace: birthplace.parse(parts[4]),
         gender: codeToGender(parts[6])
-    });
+    };
+
+    if (cb) {
+        return cb(null, parsedData);
+    }
+    
+    return parsedData;
 }
 
 function format(icNum, cb) {
@@ -79,14 +86,29 @@ function format(icNum, cb) {
     try {
         parts = extractParts(icNum);
     } catch(error) {
+        if (!cb) throw error;
         return cb(error, null);
     }
 
     const formatted = `${parts[1]}${parts[2]}${parts[3]}-${parts[4]}-${parts[5]}${parts[6]}`;
-    return cb(null, formatted);
+
+    if (cb) {
+        return cb(null, formatted);
+    }
+    
+    return formatted;
 }
 
 function unformat(icNum, cb) {
+    if (!cb) {
+        try {
+            const formatted = format(icNum);
+            return formatted.replace(/-/g, '');
+        } catch (error) {
+            throw error;
+        }
+    }
+
     format(icNum, (err, formatted) => {
         if (err) {
             return cb(err, null);
