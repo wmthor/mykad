@@ -51,35 +51,33 @@ MyKad numbers can be formatted to either have dash or without. Note that this si
 
 #### Format
 ```javascript
-// Asynchronous
-mykad.format('111013018934', (err, formatted) => {
-    if (err) throw error;
-    console.log(formatted); // 111013-01-8934
-});
-
-// Synchronous
 try {
     const formatted = mykad.format('111013018934');
     console.log(formatted); // 111013-01-8934
 } catch (error) {
-    throw error;
+    throw error; // Input error
 }
+
+// Alternative
+mykad.format('111013018934', (err, formatted) => {
+    if (err) throw error;
+    console.log(formatted); // 111013-01-8934
+});
 ```
 #### Unformat
 ```javascript
-// Asynchronous
-mykad.unformat('111013-01-8934', (err, unformatted) => {
-    if (err) throw error;
-    console.log(unformatted); // 111013018934
-});
-
-// Synchronous
 try {
     const unformatted = mykad.unformat('111013-01-8934');
     console.log(unformatted); // 111013018934
 } catch (error) {
-    throw error;
+    throw error; // Input error
 }
+
+// Alternative
+mykad.unformat('111013-01-8934', (err, unformatted) => {
+    if (err) throw error;
+    console.log(unformatted); // 111013018934
+});
 ```
 
 ### Generate
@@ -96,19 +94,18 @@ console.log(randomIcNum);
 MyKad numbers contain information about the holder's date of birth, place of birth, and gender. Date of birth assumes the age is under 100 years old. For example, the birth year '12' is 2012 instead of 1912.
 
 ```javascript
-// Asynchronous
-mykad.parse('890724-01-2498', (err, data) => {
-    if (err) throw err;
-    console.log(data);
-});
-
-// Synchronous
 try {
     const data = mykad.parse('890724-01-2498');
     console.log(data);
 } catch (error) {
     throw error;
 }
+
+// Alternative
+mykad.parse('890724-01-2498', (err, data) => {
+    if (err) throw err;
+    console.log(data);
+});
 ```
 
 Parsed data is as the following:
@@ -166,14 +163,13 @@ Gender information is provided in the form of the following values:
 ```
 
 ## Error handling
-You can omit try/catch error handling for synchronous functions when the inputted IC numbers are certain to be valid, such as after calling `mykad.isValid(icNum)` to verify the input.
+You can omit try/catch error handling when the inputted IC numbers are certain to be valid, such as after calling `mykad.isValid(icNum)` to verify the input.
 
 ```javascript
 if (mykad.isValid(icNum)) {
-    // e.g.
-    // mykad.format(icNum);
-    // mykad.unformat(icNum);
-    // mykad.parse(icNum);
+    mykad.format(icNum);
+    mykad.unformat(icNum);
+    mykad.parse(icNum);
 }
 ```
 
