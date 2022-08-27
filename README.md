@@ -58,11 +58,6 @@ try {
     throw error; // Input error
 }
 
-// Alternative
-mykad.format('111013018934', (err, formatted) => {
-    if (err) throw error;
-    console.log(formatted); // 111013-01-8934
-});
 ```
 #### Unformat
 ```javascript
@@ -72,12 +67,6 @@ try {
 } catch (error) {
     throw error; // Input error
 }
-
-// Alternative
-mykad.unformat('111013-01-8934', (err, unformatted) => {
-    if (err) throw error;
-    console.log(unformatted); // 111013018934
-});
 ```
 
 ### Generate
@@ -100,12 +89,6 @@ try {
 } catch (error) {
     throw error;
 }
-
-// Alternative
-mykad.parse('890724-01-2498', (err, data) => {
-    if (err) throw err;
-    console.log(data);
-});
 ```
 
 Parsed data is as the following:
