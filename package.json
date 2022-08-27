@@ -7,7 +7,7 @@
     "test": "npm run build && mocha",
     "build": "npx babel src --presets @babel/preset-env --out-dir dist",
     "prepublish": "npm run build",
-    "bundle": "npm run build && ./node_modules/browserify/bin/cmd.js dist/index.js --standalone mykad -o browser/mykad.js && ./node_modules/uglify-js/bin/uglifyjs --output browser/mykad.min.js --compress --mangle -- browser/mykad.js"
+    "bundle": "npm run build && node ./node_modules/browserify/bin/cmd.js dist/index.js --standalone mykad -o browser/mykad.js && node ./node_modules/uglify-js/bin/uglifyjs --output browser/mykad.min.js --compress --mangle -- browser/mykad.js"
   },
   "repository": {
     "type": "git",
