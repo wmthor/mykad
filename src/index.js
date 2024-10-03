@@ -13,7 +13,7 @@ function codeToDate(year, month, day) {
     const today = new Date();
     const birthDate = new Date(year, month - 1, day);
 
-    const age = today.getYear() - birthDate.getYear();
+    const age = today.getFullYear() - birthDate.getFullYear();
 
     // Works for now. Update this in year 2099.
     // For same year, checks if date has passed.
@@ -57,65 +57,26 @@ function isValid(icNum) {
     return !isNaN(birthDate) && birthplace.isValid(parts[4]);
 }
 
-function parse(icNum, cb) {
-    let parts;
-
-    try {
-        parts = extractParts(icNum);
-    } catch(error) {
-        if (!cb) throw error;
-        return cb(error, null);
-    }
+function parse(icNum) {
+    const parts = extractParts(icNum);
 
     const parsedData = {
         birthDate: codeToDate(parts[1], parts[2], parts[3]),
         birthPlace: birthplace.parse(parts[4]),
         gender: codeToGender(parts[6])
     };
-
-    if (cb) {
-        return cb(null, parsedData);
-    }
     
     return parsedData;
 }
 
-function format(icNum, cb) {
-    let parts;
-    
-    try {
-        parts = extractParts(icNum);
-    } catch(error) {
-        if (!cb) throw error;
-        return cb(error, null);
-    }
-
-    const formatted = `${parts[1]}${parts[2]}${parts[3]}-${parts[4]}-${parts[5]}${parts[6]}`;
-
-    if (cb) {
-        return cb(null, formatted);
-    }
-    
-    return formatted;
+function format(icNum) {
+    const parts = extractParts(icNum);
+    return `${parts[1]}${parts[2]}${parts[3]}-${parts[4]}-${parts[5]}${parts[6]}`;    
 }
 
-function unformat(icNum, cb) {
-    if (!cb) {
-        try {
-            const formatted = format(icNum);
-            return formatted.replace(/-/g, '');
-        } catch (error) {
-            throw error;
-        }
-    }
-
-    format(icNum, (err, formatted) => {
-        if (err) {
-            return cb(err, null);
-        }
-
-        return cb(null, formatted.replace(/-/g, ''));
-    });
+function unformat(icNum) {
+    const formatted = format(icNum);
+    return formatted.replace(/-/g, '');
 }
 
 module.exports = {

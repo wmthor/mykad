@@ -40,12 +40,7 @@ function randomBirthplace() {
 }
 
 function randomSpecialNumber() {
-    let code = '';
-    for (let i = 0; i < 4; i += 1) {
-        code += randomNumberBetween(0, 9);
-    }
-    
-    return code;
+    return Array.from({ length: 4 }, () => randomNumberBetween(0, 9)).join('');
 }
 
 function generateRandom() {
