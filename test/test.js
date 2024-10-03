@@ -48,9 +48,8 @@ describe('MyKad', () => {
         '73', '80', '81', '94', '95', '96', '97',
       ];
 
-      invalidBirthPlaceCodes.forEach((code) => {
-        expect(mykad.isValid(`560714${code}3094`)).to.be.false;
-      })
+      const results = invalidBirthPlaceCodes.map(code => mykad.isValid(`560714${code}3094`));
+      expect(results).to.not.include(true);
     });
   });
 
@@ -113,26 +112,13 @@ describe('MyKad', () => {
         },
       }
       Object.keys(numDataPairs).find(key => {
-        mykad.parse(key, (err, data) => {
+        mykad.parse(key, (_, data) => {
           expect(data).to.deep.equal(numDataPairs[key]);
         });
       });
     });
 
-
-    it('should return correct data object for valid formatted MyKad number (async)', done => {
-      const icNum = '460911-02-1389';
-      mykad.parse(icNum, (err, data) => {
-        expect(data).to.deep.equal({
-          birthDate: new Date(1946, 8, 11),
-          birthPlace: { region: 'SOUTHEAST_ASIA', country: 'MY', state: 'KDH' },
-          gender: 'male',
-        });
-        done();
-      });
-    });
-
-    it('should return correct data object for valid formatted MyKad number (sync)', () => {
+    it('should return correct data object for valid formatted MyKad number', () => {
       const icNum = '460911-02-1389';
       const parsedData = mykad.parse(icNum);
       expect(parsedData).to.deep.equal({
@@ -142,16 +128,7 @@ describe('MyKad', () => {
       });
     });
 
-    it('should throw error for MyKad number with wrong format (async)', done => {
-      const icNum = '1910401052331';
-      mykad.parse(icNum, (err, data) => {
-        expect(err).to.be.an('error');
-        expect(data).to.be.null;
-        done();
-      });
-    });
-
-    it('should throw error for MyKad number with wrong format (sync)', () => {
+    it('should throw error for MyKad number with wrong format', () => {
       const icNum = '1910401052331';
       try {
         mykad.parse(icNum);
@@ -162,37 +139,24 @@ describe('MyKad', () => {
 
     it('should throw error for invalid input', done => {
       const icNum = 'lololz';
-      mykad.parse(icNum, (err, data) => {
-        expect(err).to.be.an('error');
-        expect(data).to.be.null;
+
+      try {
+        mykad.parse(icNum);
+        done(new Error('Expected method to throw an error.'));
+      } catch (error) {
+        expect(error).to.be.an('error');
         done();
-      })
+      }
     });
   });
 
   describe('#format()', () => {
-    it('should return formatted MyKad number (async)', done => {
-      mykad.format('670822073459', (err, formatted) => {
-        expect(formatted).to.be.equal('670822-07-3459');
-        expect(err).to.be.null;
-        done();
-      });
-    });
-
-    it('should return formatted MyKad number (sync)', () => {
+    it('should return formatted MyKad number', () => {
       const formatted = mykad.format('670822073459');
       expect(formatted).to.be.equal('670822-07-3459');
     });
 
-    it('should throw error for invalid MyKad number (async)', done => {
-      mykad.format('67a642019435', (err, formatted) => {
-        expect(err).to.be.an('error');
-        expect(formatted).to.be.null;
-        done();
-      });
-    });
-
-    it('should throw error for invalid MyKad number (sync)', () => {
+    it('should throw error for invalid MyKad number', () => {
       try {
         const formatted = mykad.format('67a642019435');
       } catch (error) {
@@ -202,39 +166,17 @@ describe('MyKad', () => {
   });
 
   describe('#unformat()', () => {
-    it('should return unformatted MyKad number (async)', done => {
-      mykad.unformat('450312-09-4387', (err, unformatted) => {
-        expect(unformatted).to.be.equal('450312094387');
-        done();
-      });
-    });
-
-    it('should do nothing for already unformatted MyKad number (async)', done => {
-      mykad.unformat('450312094387', (err, unformatted) => {
-        expect(unformatted).to.be.equal('450312094387');
-        done();
-      });
-    });
-
-    it('should return unformatted MyKad number (sync)', () => {
+    it('should return unformatted MyKad number', () => {
       const unformatted = mykad.unformat('450312-09-4387');
       expect(unformatted).to.be.equal('450312094387');
     });
 
-    it('should do nothing for unformatted MyKad number (sync)', () => {
+    it('should do nothing for unformatted MyKad number', () => {
       const unformatted = mykad.unformat('450312094387');
       expect(unformatted).to.be.equal('450312094387');
     });
 
-    it('should throw error for invalid MyKad number (async)', done => {
-      mykad.unformat('95303132094287', (err, formatted) => {
-        expect(err).to.be.an('error');
-        expect(formatted).to.be.null;
-        done();
-      });
-    });
-
-    it('should throw error for invalid MyKad number (sync)', () => {
+    it('should throw error for invalid MyKad number', () => {
       try {
         const unformatted = mykad.unformat('95303132094287');
         expect(unformatted).to.be.equal('450312094387');

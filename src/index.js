@@ -57,14 +57,13 @@ function isValid(icNum) {
     return !isNaN(birthDate) && birthplace.isValid(parts[4]);
 }
 
-function parse(icNum, cb) {
+function parse(icNum) {
     let parts;
 
     try {
         parts = extractParts(icNum);
     } catch(error) {
-        if (!cb) throw error;
-        return cb(error, null);
+        throw error;
     }
 
     const parsedData = {
@@ -72,50 +71,29 @@ function parse(icNum, cb) {
         birthPlace: birthplace.parse(parts[4]),
         gender: codeToGender(parts[6])
     };
-
-    if (cb) {
-        return cb(null, parsedData);
-    }
     
     return parsedData;
 }
 
-function format(icNum, cb) {
+function format(icNum) {
     let parts;
     
     try {
         parts = extractParts(icNum);
     } catch(error) {
-        if (!cb) throw error;
-        return cb(error, null);
+        throw error;
     }
 
-    const formatted = `${parts[1]}${parts[2]}${parts[3]}-${parts[4]}-${parts[5]}${parts[6]}`;
-
-    if (cb) {
-        return cb(null, formatted);
-    }
-    
-    return formatted;
+    return `${parts[1]}${parts[2]}${parts[3]}-${parts[4]}-${parts[5]}${parts[6]}`;    
 }
 
-function unformat(icNum, cb) {
-    if (!cb) {
-        try {
-            const formatted = format(icNum);
-            return formatted.replace(/-/g, '');
-        } catch (error) {
-            throw error;
-        }
+function unformat(icNum) {
+    try {
+        const formatted = format(icNum);
+        return formatted.replace(/-/g, '');
+    } catch (error) {
+        throw error;
     }
-
-    format(icNum, (err, formatted) => {
-        if (err) {
-            return cb(err, null);
-        }
-
-        return cb(null, formatted.replace(/-/g, ''));
-    });
 }
 
 module.exports = {
