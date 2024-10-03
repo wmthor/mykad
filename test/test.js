@@ -148,6 +148,21 @@ describe('MyKad', () => {
         done();
       }
     });
+    it('should throw error for invalid birth place codes', done => {
+      const invalidBirthPlaceCodes = ['17', '18', '19', '20', '69', '70', '73', '80', '81', '94', '95', '96', '97'];
+
+      invalidBirthPlaceCodes.forEach(code => {
+        const icNum = `460911-${code}-1389`;
+        try {
+          mykad.parse(icNum);
+          done(new Error(`Expected method to throw an error for code ${code}.`));
+        } catch (error) {
+          expect(error).to.be.an('error');
+        }
+      });
+
+      done();
+    });
   });
 
   describe('#format()', () => {

@@ -97,7 +97,7 @@ const countryCodePairs = {
     '99': { country: 'UNSPECIFIED', region: null },
 };
 
-function numisBetween(num, lower, upper) {
+function numIsBetween(num, lower, upper) {
     return (num - lower) * (num - upper) <= 0
 }
 
@@ -107,11 +107,13 @@ function codeToState(code) {
 }
 
 function isMalaysia(code) {
-    return (
-        numisBetween(code, 1, 16) ||
-        numisBetween(code, 21, 59) ||
-        code == 82
-    );
+    const MALAYSIA_CODES = [
+        { lower: 1, upper: 16 },
+        { lower: 21, upper: 59 },
+        { lower: 82, upper: 82 }
+    ];
+
+    return MALAYSIA_CODES.some(range => numIsBetween(code, range.lower, range.upper));
 }
 
 function isForeign(code) {
@@ -137,7 +139,7 @@ function parse(code) {
     if (isMalaysia(code)) return parseMalaysia(code);
     if (isForeign(code)) return parseForeign(code);
 
-    return null;
+    throw new Error('Invalid birth place code');
 }
 
 function isValid(code) {
