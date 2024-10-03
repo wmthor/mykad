@@ -13,7 +13,7 @@ function codeToDate(year, month, day) {
     const today = new Date();
     const birthDate = new Date(year, month - 1, day);
 
-    const age = today.getYear() - birthDate.getYear();
+    const age = today.getFullYear() - birthDate.getFullYear();
 
     // Works for now. Update this in year 2099.
     // For same year, checks if date has passed.
@@ -58,13 +58,7 @@ function isValid(icNum) {
 }
 
 function parse(icNum) {
-    let parts;
-
-    try {
-        parts = extractParts(icNum);
-    } catch(error) {
-        throw error;
-    }
+    const parts = extractParts(icNum);
 
     const parsedData = {
         birthDate: codeToDate(parts[1], parts[2], parts[3]),
@@ -76,24 +70,13 @@ function parse(icNum) {
 }
 
 function format(icNum) {
-    let parts;
-    
-    try {
-        parts = extractParts(icNum);
-    } catch(error) {
-        throw error;
-    }
-
+    const parts = extractParts(icNum);
     return `${parts[1]}${parts[2]}${parts[3]}-${parts[4]}-${parts[5]}${parts[6]}`;    
 }
 
 function unformat(icNum) {
-    try {
-        const formatted = format(icNum);
-        return formatted.replace(/-/g, '');
-    } catch (error) {
-        throw error;
-    }
+    const formatted = format(icNum);
+    return formatted.replace(/-/g, '');
 }
 
 module.exports = {
