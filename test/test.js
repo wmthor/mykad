@@ -51,6 +51,23 @@ describe('MyKad', () => {
       const results = invalidBirthPlaceCodes.map(code => mykad.isValid(`560714${code}3094`));
       expect(results).to.not.include(true);
     });
+    it('should return false for empty string', () => {
+      expect(mykad.isValid('')).to.be.false;
+    });
+
+    it('should return false for null input', () => {
+      expect(mykad.isValid(null)).to.be.false;
+    });
+
+    it('should return false for undefined input', () => {
+      expect(mykad.isValid(undefined)).to.be.false;
+    });
+
+    it('should return false for non-string input', () => {
+      expect(mykad.isValid(111111011111)).to.be.false;
+      expect(mykad.isValid({})).to.be.false;
+      expect(mykad.isValid([])).to.be.false;
+    });
   });
 
   describe('#parse()', () => {
@@ -171,9 +188,14 @@ describe('MyKad', () => {
       expect(formatted).to.be.equal('670822-07-3459');
     });
 
+    it('should return formatted MyKad number (when already formatted)', () => {
+      const formatted = mykad.format('670822-07-3459');
+      expect(formatted).to.be.equal('670822-07-3459');
+    });
+
     it('should throw error for invalid MyKad number', () => {
       try {
-        const formatted = mykad.format('67a642019435');
+        mykad.format('67a642019435');
       } catch (error) {
         expect(error).to.be.an('error');
       }
@@ -202,11 +224,12 @@ describe('MyKad', () => {
   });
 
   describe('#generateRandom()', () => {
-    it('should return valid randomized MyKad number', () => {
-      const randomNo = mykad.generateRandom();
-
-      expect(randomNo).to.have.lengthOf(12);
-      expect(mykad.isValid(randomNo)).to.be.true;
+    it('should return multiple valid randomized MyKad numbers', () => {
+      for (let i = 0; i < 100; i++) {
+        const randomNo = mykad.generateRandom();
+        expect(randomNo).to.have.lengthOf(12);
+        expect(mykad.isValid(randomNo)).to.be.true;
+      }
     });
   });
 });
