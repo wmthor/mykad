@@ -219,6 +219,12 @@ function dateIsBefore(before, max) {
 }
 function codeToDate(year, month, day) {
   var today = new Date();
+
+  // Prevents the date from being set to 29th February 1900.
+  // Special case as 29th February 2000 is a valid date.
+  if (year === '00') {
+    year = today.getFullYear().toString().slice(0, 2) + '00';
+  }
   var birthDate = new Date(year, month - 1, day);
   var age = today.getFullYear() - birthDate.getFullYear();
 
