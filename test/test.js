@@ -15,6 +15,14 @@ describe('MyKad', () => {
       expect(mykad.isValid('000223-08-1274')).to.be.true;
     });
 
+    it('should return true for leap year birth date', () => {
+      expect(mykad.isValid(`000229-08-1274`)).to.be.true;
+    });
+
+    it('should return a valid date for leap year', () => {
+      expect(mykad.isValid(`040229-08-1274`)).to.be.true;
+    });
+
     it('should return false for invalid input', () => {
       expect(mykad.isValid('loooool')).to.be.false;  
     });
