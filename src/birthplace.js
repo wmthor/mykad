@@ -128,10 +128,10 @@ function parseMalaysia(code) {
 }
 
 function parseForeign(code) {
-    return Object.assign(
-        { state: null },
-        countryCodePairs[code]
-    );
+    return {
+        state: null,
+        ...countryCodePairs[code]
+    }
 }
 
 function parse(code) {
