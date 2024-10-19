@@ -182,7 +182,7 @@ function isMalaysia(code) {
   });
 }
 function isForeign(code) {
-  return countryCodePairs[code] != undefined;
+  return countryCodePairs[code] != undefined && !isMalaysia(code);
 }
 function parseMalaysia(code) {
   return {
