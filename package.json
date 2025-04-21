@@ -26,11 +26,11 @@
   },
   "homepage": "https://github.com/wmthor/mykad#readme",
   "devDependencies": {
-    "@babel/cli": "^7.25.7",
-    "@babel/preset-env": "^7.25.7",
-    "browserify": "^17.0.0",
-    "chai": "^4.5.0",
-    "mocha": "^10.7.3",
+    "@babel/cli": "^7.27.0",
+    "@babel/preset-env": "^7.26.9",
+    "browserify": "^17.0.1",
+    "chai": "^5.2.0",
+    "mocha": "^11.1.0",
     "uglify-js": "^3.19.3"
   }
 }

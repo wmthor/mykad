@@ -1,7 +1,8 @@
-var chai = require('chai');  
-var expect = chai.expect;
+import { expect } from 'chai';
 
-const mykad = require('../dist/');
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+const mykad = require('../dist');
 
 describe('MyKad', () => {
   describe('#isValid()', () => {
