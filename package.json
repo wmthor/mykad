@@ -1,6 +1,6 @@
 {
   "name": "mykad",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Library to validate, parse, generate, and format Malaysian identity card (MyKad) numbers",
   "main": "./dist/index.js",
   "scripts": {
